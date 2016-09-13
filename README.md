@@ -1,3 +1,3 @@
 # PurdueClassWatcher
-An old commit for proof of concept.
+Version .1.
 All rights reserved.
