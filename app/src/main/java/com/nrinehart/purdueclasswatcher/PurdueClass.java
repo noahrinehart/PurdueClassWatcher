@@ -86,4 +86,6 @@ public class PurdueClass extends RealmObject {
     public void setRemaining(String remaining) {
         this.remaining = remaining;
     }
+
+
 }

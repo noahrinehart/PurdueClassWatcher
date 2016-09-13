@@ -82,9 +82,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             long systemMillis = System.currentTimeMillis();
             // Initiates alarm manager off of service
             AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
-//            // Retrieves Preferences for timing
-//            SharedPreferences sharedPreferences = activity.getSharedPreferences("prefs_main", 0);
-//            String timingValue = sharedPreferences.getString("sync_frequency", "60");
             // Sets repeating alarm from alarm manager
             switch (time) {
                 case "15": // 15 Minutes

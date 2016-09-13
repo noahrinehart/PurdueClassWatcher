@@ -1,8 +1,9 @@
-package com.nrinehart.purdueclasswatcher;
+package com.nrinehart.purdueclasswatcher.services;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.nrinehart.purdueclasswatcher.PurdueClass;
 import com.nrinehart.purdueclasswatcher.eventbus.ClassInfoResultEvent;
 import com.nrinehart.purdueclasswatcher.eventbus.EventBus;
 
@@ -16,6 +17,9 @@ import org.jsoup.nodes.Element;
 
 public class DownloadClassInfoAsyncTask extends AsyncTask<String, Void, PurdueClass> {
 
+    private static final String TAG = "DownloadClassInfoAsyncT";
+
+    //String is crn
     @Override
     protected PurdueClass doInBackground(String... params) {
         try {
@@ -47,5 +51,11 @@ public class DownloadClassInfoAsyncTask extends AsyncTask<String, Void, PurdueCl
     protected void onPostExecute(PurdueClass purdueClass) {
         super.onPostExecute(purdueClass);
         EventBus.getBus().post(new ClassInfoResultEvent(purdueClass));
+    }
+
+    public static void downloadClass(String crn) {
+        DownloadClassInfoAsyncTask downloadClassInfoAsyncTask = new DownloadClassInfoAsyncTask();
+        Log.d(TAG, crn + " sent to async");
+        downloadClassInfoAsyncTask.execute(crn);
     }
 }
