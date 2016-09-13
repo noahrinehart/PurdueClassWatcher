@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.nrinehart.purdueclasswatcher.eventbus.EventBus;
 import com.nrinehart.purdueclasswatcher.eventbus.RemoveClassResult;
 
+import io.realm.Realm;
 import io.realm.RealmBasedRecyclerViewAdapter;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.RealmViewHolder;
 
@@ -32,8 +34,9 @@ public class PurdueClassRealmAdapter
         TextView sectionTextView;
         TextView availabilityTextView;
         View v;
+        PurdueClassRealmAdapter adapter;
 
-        ViewHolder(RelativeLayout container) {
+        ViewHolder(RelativeLayout container, PurdueClassRealmAdapter adapter) {
             super(container);
             this.nameTextView = (TextView) container.findViewById(R.id.row_class_name);
             this.crnTextView = (TextView) container.findViewById(R.id.row_crn);
@@ -41,6 +44,7 @@ public class PurdueClassRealmAdapter
             this.sectionTextView = (TextView) container.findViewById(R.id.row_section);
             this.availabilityTextView = (TextView) container.findViewById(R.id.row_availability);
             this.v = container;
+            this.adapter = adapter;
         }
     }
 
@@ -55,7 +59,7 @@ public class PurdueClassRealmAdapter
     @Override
     public PurdueClassRealmAdapter.ViewHolder onCreateRealmViewHolder(ViewGroup viewGroup, int viewType) {
         View v = inflater.inflate(R.layout.row_class, viewGroup, false);
-        return new ViewHolder((RelativeLayout) v);
+        return new ViewHolder((RelativeLayout) v, this);
     }
 
     @Override

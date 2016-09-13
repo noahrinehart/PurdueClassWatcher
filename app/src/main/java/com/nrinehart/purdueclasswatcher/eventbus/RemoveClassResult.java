@@ -14,7 +14,7 @@ public class RemoveClassResult {
         this.position = position;
     }
 
-    public int getPurdueClass() {
+    public int getPurdueClassPosition() {
         return position;
     }
 }

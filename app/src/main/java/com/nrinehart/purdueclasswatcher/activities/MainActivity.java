@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     protected Realm realm;
     protected RealmRecyclerView realmRecyclerView;
     protected PurdueClassRealmAdapter adapter;
+    protected RealmResults<PurdueClass> classes;
+
 
     protected ListPreference syncFrequencyListPreference;
 
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO: Comment everything
         //TODO: Orientation
         //TODO: Strings
+        //TODO: Kotlin?
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         String timingValue = settings.getString("sync_frequency", "60");
@@ -189,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Log.d(TAG, "Adding/updating new Class to realm " + crn);
                 copyOrUpdateToRealm(purdueClass);
+
             }
         } else {
             Log.d(TAG, "Class not found! ");
@@ -201,12 +205,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe
-    public void onRemoveClassResult(RemoveClassResult result) {
-        if (adapter!= null && result != null) {
-            int position = result.getPurdueClass();
-            adapter.onItemSwipedDismiss(position);
-        } else {
-            Log.d(TAG, "Class doesn't exist or adapter is null when removed!");
+    public void onRemoveClassResult(final RemoveClassResult result) {
+
+        final RealmResults<PurdueClass> classes = realm
+                .where(PurdueClass.class)
+                .findAll();
+        if (classes.size() > 0) {
+
+
+            PurdueClass purdueClass = classes.get(result.getPurdueClassPosition());
+
+
+            if (adapter != null && result != null && purdueClass.getCrn() != null) {
+                Log.d(TAG, "Removing class");
+//            int position = result.getPurdueClassPosition();
+//            adapter.onItemSwipedDismiss(position);
+//            Log.d(TAG, "Class has been removed");
+
+
+                realm.beginTransaction();
+                if (classes.size() <= 1) {
+                    classes.deleteFromRealm(result.getPurdueClassPosition());
+                } else {
+                    classes.deleteAllFromRealm();
+                }
+                adapter.notifyDataSetChanged();
+                realm.commitTransaction();
+
+
+            } else {
+                Log.d(TAG, "Class doesn't exist or adapter is null when removed!");
+            }
         }
     }
 
@@ -240,9 +269,7 @@ public class MainActivity extends AppCompatActivity {
         if(notificationValue && !NotificationService.isForeground(this)) {
             Log.d(TAG, "Sent notification for " + purdueClass.getName());
             Intent intent = new Intent(this, MainActivity.class);
-            int requestID = (int) System.currentTimeMillis();
-            int flags = PendingIntent.FLAG_CANCEL_CURRENT;
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID, intent, flags);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
             mBuilder.setSmallIcon(R.mipmap.ic_launcher);
@@ -250,13 +277,13 @@ public class MainActivity extends AppCompatActivity {
             mBuilder.setContentText(purdueClass.getActual() + "/" + purdueClass.getCapactiy());
             mBuilder.setContentIntent(pendingIntent);
             mBuilder.setAutoCancel(true);
-            if (vibrateValue) {
+            if (vibrateValue)
                 mBuilder.setVibrate(new long[]{500, 500, 500, 500});
-                mBuilder.setLights(Color.rgb(177, 129, 11), 500, 500);
-            }
+            mBuilder.setLights(Color.rgb(177, 129, 11), 500, 500);
+
 
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(Integer.parseInt(purdueClass.getCrn()), mBuilder.build());
+            mNotificationManager.notify(1, mBuilder.build());
         }
     }
 
