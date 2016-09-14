@@ -8,3 +8,10 @@ Just go to [https://selfservice.mypurdue.purdue.edu](https://selfservice.mypurdu
 <img src="https://raw.githubusercontent.com/noahrinehart/PurdueClassWatcher/master/pictures/Screenshot_20160914-164126.png" width="300">
 <img src="https://raw.githubusercontent.com/noahrinehart/PurdueClassWatcher/master/pictures/Screenshot_20160914-164134.png" width="300">
 
+## TODO
+- [ ] Use R.strings
+- [ ] Reminders
+- [ ] Improved class selection
+- [ ] Comment everything
+- [ ] Kotlin?
+- [ ] Application licensing

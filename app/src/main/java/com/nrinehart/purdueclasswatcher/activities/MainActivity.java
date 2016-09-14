@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Class Watcher");
 
-        //TODO: Fetch new class
-        //TODO: Notification services (notification, vibrate, sync freq) repeated update?
         //TODO: Comment everything
         //TODO: Orientation
         //TODO: Strings
