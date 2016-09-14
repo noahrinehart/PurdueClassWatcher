@@ -1,4 +1,5 @@
 # PurdueClassWatcher
 Version .2
 
-All rights reserved.
+## Instructions
+Just go to [https://selfservice.mypurdue.purdue](https://selfservice.mypurdue.purdue.edu/prod/bwckctlg.p_disp_dyn_ctlg) and search for your class, and then section to find the CRN number.
