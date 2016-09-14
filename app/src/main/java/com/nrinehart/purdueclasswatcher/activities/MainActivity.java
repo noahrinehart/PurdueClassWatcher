@@ -58,8 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        getSupportActionBar().setTitle("Class Watcher");
 
         //TODO: Fetch new class
         //TODO: Notification services (notification, vibrate, sync freq) repeated update?
