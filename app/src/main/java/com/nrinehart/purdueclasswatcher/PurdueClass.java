@@ -17,6 +17,7 @@ public class PurdueClass extends RealmObject {
     String capactiy;
     String actual;
     String remaining;
+    boolean notified;
 
     public PurdueClass() {
     }
@@ -29,6 +30,7 @@ public class PurdueClass extends RealmObject {
         this.capactiy = capactiy;
         this.actual = actual;
         this.remaining = remaining;
+        this.notified = false;
     }
 
     public String getName() {
@@ -85,6 +87,14 @@ public class PurdueClass extends RealmObject {
 
     public void setRemaining(String remaining) {
         this.remaining = remaining;
+    }
+
+    public boolean isNotified() {
+        return notified;
+    }
+
+    public void setNotified(boolean notified) {
+        this.notified = notified;
     }
 
 

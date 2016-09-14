@@ -85,7 +85,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // Sets repeating alarm from alarm manager
             switch (time) {
                 case "15": // 15 Minutes
-                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, systemMillis, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, systemMillis, 60*1000, pendingIntent);
                     Log.d(TAG, "Setting alarm for 15 minutes");
                     break;
                 case "30": // 30 minutes

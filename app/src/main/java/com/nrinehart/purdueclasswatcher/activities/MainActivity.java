@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         //TODO: Orientation
         //TODO: Strings
         //TODO: Kotlin?
+        //TODO: Reminders
+        //TODO: Applictation licensing
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         String timingValue = settings.getString("sync_frequency", "60");
@@ -182,9 +184,10 @@ public class MainActivity extends AppCompatActivity {
             String crn = purdueClass.getCrn();
             if (classExists(purdueClass)) {
                 Log.d(TAG, purdueClass.getName() + " is already added");
-                if (seatsAvailable(purdueClass)) {
+                if (seatsAvailable(purdueClass) && !purdueClass.isNotified()) {
                     Log.d(TAG, purdueClass.getName() + "has seats available!");
                     sendNotification(purdueClass);
+                    purdueClass.setNotified(true);
                     copyOrUpdateToRealm(purdueClass);
                 } else {
                     Log.d(TAG, purdueClass.getName() + " is still full");

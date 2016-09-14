@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.nrinehart.purdueclasswatcher.PurdueClass;
+import com.nrinehart.purdueclasswatcher.activities.MainActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
@@ -45,10 +47,6 @@ public class NotificationService extends IntentService {
                 .findAll();
 
 
-
-
-
-
         //For if we want no notification when app open
 
         if (isForeground(getApplicationContext())) {
@@ -56,11 +54,23 @@ public class NotificationService extends IntentService {
         } else {
             Log.d(TAG, "running in background");
             for(PurdueClass purdueClass : classes) {
-                Log.d(TAG,purdueClass.getName() + " isn't notified yet");
-                DownloadClassInfoAsyncTask.downloadClass(purdueClass.getCrn());
-                Log.d(TAG,purdueClass.getName() + " was already notified");
+                if(!purdueClass.isNotified()) {
+                    Log.d(TAG, purdueClass.getName() + " isn't notified yet");
+                    DownloadClassInfoAsyncTask.downloadClass(purdueClass.getCrn());
+                    if (realm != null) {
+                        realm.beginTransaction();
+                        purdueClass.setNotified(true);
+                        realm.copyToRealmOrUpdate(purdueClass);
+                        realm.commitTransaction();
+                    } else {
+                        Log.d(TAG, "Realm was null!");
+                    }
+                } else {
+                    Log.d(TAG,purdueClass.getName() + " was already notified");
+                }
             }
         }
+
     }
 
     public static boolean isForeground(Context context) {
