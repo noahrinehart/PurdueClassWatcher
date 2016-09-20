@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 realm.beginTransaction();
-                if (classes.size() <= 1) {
+                if (classes.size() >= 1) {
                     classes.deleteFromRealm(result.getPurdueClassPosition());
                 } else {
                     classes.deleteAllFromRealm();
